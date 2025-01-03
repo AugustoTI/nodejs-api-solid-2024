@@ -8,9 +8,29 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(cuid())
-  name  String
-  email String @unique
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
 
   @@map("users")
+}
+
+model CheckIn {
+  id           String    @id @default(cuid())
+  validated_at DateTime?
+  created_at   DateTime  @default(now())
+
+  @@map("check_ins")
+}
+
+model Gym {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  phone       String?
+  latitude    Decimal
+
+  @@map("gyms")
 }
