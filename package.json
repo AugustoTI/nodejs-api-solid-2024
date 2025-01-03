@@ -6,7 +6,10 @@
     "lint": "eslint . --cache --cache-location ./.temp/.eslintcache --max-warnings 0 --fix",
     "build": "pnpm type-check && swc src -d build --strip-leading-paths",
     "clean": "rimraf build",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "db:studio": "prisma studio",
+    "db:migrate-dev": "prisma migrate dev",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
