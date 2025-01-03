@@ -10,10 +10,12 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "target": "es2022"
   },
   "module": {
     "type": "commonjs"
   },
+  "minify": true,
   "sourceMaps": true
 }
