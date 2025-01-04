@@ -6,6 +6,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "incremental": true,
+    "tsBuildInfoFile": ".temp/.tsbuildinfo",
     "allowJs": true,
     "resolveJsonModule": true,
     "paths": {
