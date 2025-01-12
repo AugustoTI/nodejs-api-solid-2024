@@ -5,7 +5,7 @@
     "start": "node build/server.js",
     "lint": "eslint . --cache --cache-location ./.temp/.eslintcache --max-warnings 0 --fix",
     "build": "pnpm lint && pnpm type-check && pnpm build:swc",
-    "build:swc": "swc src -d build --strip-leading-paths --ignore src/**/*.{spec,test}.ts --ignore src/@types --ignore src/**/*.interface.ts",
+    "build:swc": "swc src -d build --strip-leading-paths",
     "clean": "rimraf build coverage",
     "test": "vitest run --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",

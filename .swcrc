@@ -1,5 +1,10 @@
 {
   "$schema": "https://swc.rs/schema.json",
+  "exclude": [
+    "^src\/(?:.*\/)*.*\\.(?:spec|test)\\.ts$",
+    "^src\/(?:.*\/)*.*\\.interface\\.ts$",
+    "^src\/@types(?:\/.*)?\/?$"
+  ],
   "jsc": {
     "parser": {
       "syntax": "typescript",
