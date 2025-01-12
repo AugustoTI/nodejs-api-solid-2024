@@ -4,7 +4,7 @@
     "dev": "node -r @swc-node/register --watch src/server.ts",
     "start": "node build/server.js",
     "lint": "eslint . --cache --cache-location ./.temp/.eslintcache --max-warnings 0 --fix",
-    "build": "pnpm type-check && swc src -d build --strip-leading-paths",
+    "build": "pnpm lint && pnpm type-check && swc src -d build --strip-leading-paths",
     "clean": "rimraf build",
     "type-check": "tsc",
     "db:studio": "prisma studio",
