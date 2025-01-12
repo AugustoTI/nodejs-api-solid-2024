@@ -23,7 +23,7 @@ export async function registerUser(req: FastifyRequest, res: FastifyReply) {
       return res.status(409).send({ message: err.message })
     }
 
-    return res.status(500).send()
+    throw err
   }
 
   return res.status(201).send()
