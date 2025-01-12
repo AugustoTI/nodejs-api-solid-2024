@@ -6,6 +6,6 @@ export default defineConfig({
   test: {
     globals: true,
     passWithNoTests: true,
-    setupFiles: ['./tests/setup.ts'],
+    setupFiles: ['./vitest.setup.mts'],
   },
 })

@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma'
 import { type Prisma, type User } from '@prisma/client'
-import { type UsersRepository } from '@/repositories/interfaces/users-repository'
+import { type UsersRepository } from '@/repositories/users-repository.interface'
 
 export class PrismaUserRepository implements UsersRepository {
   async create(data: Prisma.UserCreateInput): Promise<User> {
