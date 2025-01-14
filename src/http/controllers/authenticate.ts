@@ -1,12 +1,11 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { RegisterUseCase } from '@/use-cases/register'
 import { PrismaUserRepository } from '@/repositories/prisma/prisma-users-repository'
-import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-exists'
+import { AuthenticateUseCase } from '@/use-cases/authenticate'
+import { InvalidCredentialsError } from '@/use-cases/errors/invalid-credentials'
 
-export async function register(req: FastifyRequest, res: FastifyReply) {
+export async function authenticate(req: FastifyRequest, res: FastifyReply) {
   const registerBodySchema = z.object({
-    name: z.string(),
     email: z.string().email(),
     password: z.string(),
   })
@@ -15,16 +14,16 @@ export async function register(req: FastifyRequest, res: FastifyReply) {
 
   try {
     const usersRepository = new PrismaUserRepository()
-    const registerUseCase = new RegisterUseCase(usersRepository)
+    const registerUseCase = new AuthenticateUseCase(usersRepository)
 
     await registerUseCase.execute(bodyParsed)
   } catch (err) {
-    if (err instanceof UserAlreadyExistsError) {
-      return res.status(409).send({ message: err.message })
+    if (err instanceof InvalidCredentialsError) {
+      return res.status(400).send({ message: err.message })
     }
 
     throw err
   }
 
-  return res.status(201).send()
+  return res.status(200).send()
 }
