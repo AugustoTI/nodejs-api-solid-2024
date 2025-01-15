@@ -1,5 +1,6 @@
-import { db } from '@/lib/prisma'
 import { type Prisma, type User } from '@prisma/client'
+
+import { db } from '@/lib/prisma'
 import { type UsersRepository } from '@/repositories/users-repository.interface'
 
 export class PrismaUserRepository implements UsersRepository {
