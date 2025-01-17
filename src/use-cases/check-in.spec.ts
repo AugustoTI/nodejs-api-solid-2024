@@ -1,14 +1,28 @@
+import { Decimal } from '@prisma/client/runtime/library'
+
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
+import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
 
 import { CheckInUseCase } from './check-in'
 
 let checkInRepository: InMemoryCheckInsRepository
+let gymsRepository: InMemoryGymsRepository
 let sut: CheckInUseCase
 
 describe('USE CASE --> Check in', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInRepository = new InMemoryCheckInsRepository()
-    sut = new CheckInUseCase(checkInRepository)
+    gymsRepository = new InMemoryGymsRepository()
+    sut = new CheckInUseCase(checkInRepository, gymsRepository)
+
+    await gymsRepository.create({
+      id: 'gym-id',
+      title: 'GymPass',
+      description: '',
+      phone: '',
+      latitude: new Decimal(0),
+      longitude: new Decimal(0),
+    })
 
     vi.useFakeTimers()
   })
@@ -21,6 +35,8 @@ describe('USE CASE --> Check in', () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     expect(checkIn.id).toString()
@@ -32,12 +48,16 @@ describe('USE CASE --> Check in', () => {
     await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     await expect(
       sut.execute({
         gymId: 'gym-id',
         userId: 'user-id',
+        userLatitude: 0,
+        userLongitude: 0,
       }),
     ).rejects.toBeInstanceOf(Error)
   })
@@ -48,6 +68,8 @@ describe('USE CASE --> Check in', () => {
     await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
+      userLatitude: 0,
+      userLongitude: 0,
     })
 
     vi.setSystemTime(new Date(2025, 0, 17, 18))
@@ -56,7 +78,29 @@ describe('USE CASE --> Check in', () => {
       sut.execute({
         gymId: 'gym-id',
         userId: 'user-id',
+        userLatitude: 0,
+        userLongitude: 0,
       }),
     ).resolves.toBeTruthy()
+  })
+
+  it('should not be able to check in on distant gym', async () => {
+    await gymsRepository.create({
+      id: 'gym-id-2',
+      title: 'GymPass',
+      description: '',
+      phone: '',
+      latitude: new Decimal(-1.3471235),
+      longitude: new Decimal(48.472522),
+    })
+
+    await expect(
+      sut.execute({
+        gymId: 'gym-id',
+        userId: 'user-id',
+        userLatitude: -1.4121282,
+        userLongitude: -48.4408506,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
