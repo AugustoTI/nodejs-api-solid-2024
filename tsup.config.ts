@@ -6,7 +6,7 @@ import tsConfig from './tsconfig.json'
 
 export default defineConfig({
   entry: [
-    'src/**/*.ts',
+    'src/server.ts',
     '!src/@types',
     '!src/**/*.{test,spec}.ts',
     '!src/**/*.interface.ts',
@@ -16,7 +16,6 @@ export default defineConfig({
   minify: true,
   outDir: './build',
   sourcemap: true,
-  bundle: false,
   esbuildPlugins: [
     {
       name: 'override-swc',
