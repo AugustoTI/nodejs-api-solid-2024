@@ -7,5 +7,8 @@ export default defineConfig({
     globals: true,
     passWithNoTests: true,
     setupFiles: ['./vitest.setup.mts'],
+    coverage: {
+      include: ['src/{use-cases,repositories}/**'],
+    },
   },
 })
