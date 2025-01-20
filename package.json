@@ -10,7 +10,7 @@
     "clean": "rimraf build coverage",
     "test": "vitest run --dir src/use-cases",
     "test:watch": "vitest --dir src/use-cases",
-    "test:coverage": "vitest run --coverage --changed",
+    "test:coverage": "vitest run --coverage",
     "type-check": "tsc",
     "db:studio": "prisma studio",
     "db:migrate-dev": "prisma migrate dev",
