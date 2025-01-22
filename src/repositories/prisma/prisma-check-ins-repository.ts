@@ -1,4 +1,4 @@
-import { CheckIn, Prisma } from '@prisma/client'
+import { type CheckIn, type Prisma } from '@prisma/client'
 import dayjs from 'dayjs'
 
 import { db } from '@/lib/prisma'
