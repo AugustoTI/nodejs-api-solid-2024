@@ -6,10 +6,10 @@ import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coor
 import { FindManyNearbyParams, type GymsRepository } from '../gyms-repository.interface'
 
 export class InMemoryGymsRepository implements GymsRepository {
-  private gymsRepository: Gym[] = []
+  public items: Gym[] = []
 
   async findById(gymId: string): Promise<Gym | null> {
-    const result = this.gymsRepository.find(gym => gym.id === gymId)
+    const result = this.items.find(gym => gym.id === gymId)
 
     return result ? result : null
   }
@@ -25,7 +25,7 @@ export class InMemoryGymsRepository implements GymsRepository {
       created_at: new Date(),
     }
 
-    this.gymsRepository.push(newGym)
+    this.items.push(newGym)
 
     return newGym
   }
@@ -35,7 +35,7 @@ export class InMemoryGymsRepository implements GymsRepository {
     const startIndex = (page - 1) * itemsPerPage
     const endIndex = startIndex + itemsPerPage
 
-    const filteredGyms = this.gymsRepository.filter(gym =>
+    const filteredGyms = this.items.filter(gym =>
       gym.title.toLowerCase().includes(query.toLowerCase()),
     )
 
@@ -47,7 +47,7 @@ export class InMemoryGymsRepository implements GymsRepository {
 
     const MAX_DISTANCIE_IN_KILOMETERS = 10
 
-    const nearbyGyms = this.gymsRepository.filter(gym => {
+    const nearbyGyms = this.items.filter(gym => {
       const distance = getDistanceBetweenCoordinates(
         { latitude, longitude },
         {
